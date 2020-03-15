@@ -1,0 +1,26 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no
+  vars:
+    commit_hash: "{{ app_revision | default('develop') }}"
+
+  tasks:
+    - name: Print deployment details
+      debug: msg="Deploying application version {{ commit_hash }} to {{ path }} on stage {{ app_env }}. CI mode {{ lookup('env','CI') }}"
+
+    - name: Clone repository
+      git:
+        repo: https://gitlab.com/web-development-python/taskmate.git
+        version: "{{ commit_hash }}"
+        dest: "{{ path }}"
+        accept_hostkey: yes
+        update: yes
+        force: yes
+      register: cloned
+      become: yes
+      become_user: "{{ user }}"
+    - name: Start stack with docker-compose remotely
+      shell: "docker-compose up -d --build"
+      args:
+        chdir: "{{ path }}"

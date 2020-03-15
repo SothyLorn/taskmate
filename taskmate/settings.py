@@ -25,7 +25,7 @@ SECRET_KEY = 'm+_p!pqmik7x+yb$562(fq%n4*(mt4_$fw(hl#8w2+imfhj9iv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition

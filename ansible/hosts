@@ -1,0 +1,13 @@
+localhost ansible_connection=local
+[app]
+app-dev   ansible_ssh_host=34.87.89.147 domain=""
+
+[app:vars]
+remoted_user=devops
+ansible_user={{ remoted_user }}
+ansible_ssh_user={{ remoted_user }}
+docker_ci_repo=sothy/article
+article_image=article
+app_env=dev
+path=/srv/taskmate
+user=deployer

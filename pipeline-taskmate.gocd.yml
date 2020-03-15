@@ -1,0 +1,18 @@
+format_version: 2
+pipelines:
+  taskmate_dev:
+    group: taskmate
+    label_template: "${git[:8]}"
+    materials:
+      git:
+        type: configrepo
+        auto_update: true
+        shallow_clone: true
+        branch: "master"
+    lock_behavior: "unlockWhenFinished"
+    stages:
+      - deploy:
+          clean_workspace: yes
+          tasks:
+            - script: |
+                bash -e scripts/pipeline/deploy.sh

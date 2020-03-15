@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Task
 from .forms import TaskForm
-
+from django.core.paginator import Paginator
 # Create your views here.
 # def todolist(request):
 #     return HttpResponse("Welcome to Task Page")
@@ -14,7 +14,10 @@ def todolist(request):
             form.save()
         return redirect('todolist')
     else: 
-        all_task = Task.objects.all
+        all_task = Task.objects.all()
+        paginator = Paginator(all_task,5)
+        page = request.GET.get('pg')
+        all_task = paginator.get_page(page)
         return render(request, 'todolist.html',{'all_task':all_task})
 def delete_task(request,task_id):
     task = Task.objects.get(pk=task_id)

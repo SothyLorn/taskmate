@@ -48,6 +48,11 @@ def contact(request):
         'contact_text': "Welcome to contact page."
     }
     return render(request, 'contact.html',context)
+def index(request):
+    context = {
+        'index_text': "Welcome to home page."
+    }
+    return render(request, 'index.html',context)
 def about(request):
     context = {
         'about_text': "Welcome to about page."

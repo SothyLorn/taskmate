@@ -4,18 +4,19 @@ from .models import Task
 from .forms import TaskForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-# Create your views here.
-# def todolist(request):
-#     return HttpResponse("Welcome to Task Page")
+
 @login_required
 def todolist(request):
     if request.method == "POST":
         form = TaskForm(request.POST or None)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.manage = request.user
+            instance.save()
         return redirect('todolist')
     else: 
-        all_task = Task.objects.all()
+        #all_task = Task.objects.all()
+        all_task = Task.objects.filter(manage=request.user)
         paginator = Paginator(all_task,5)
         page = request.GET.get('pg')
         all_task = paginator.get_page(page)

@@ -3,10 +3,11 @@ from django.http import HttpResponse
 from .models import Task
 from .forms import TaskForm
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 # def todolist(request):
 #     return HttpResponse("Welcome to Task Page")
-
+@login_required
 def todolist(request):
     if request.method == "POST":
         form = TaskForm(request.POST or None)

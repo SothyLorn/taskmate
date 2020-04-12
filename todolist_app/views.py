@@ -20,10 +20,12 @@ def todolist(request):
         page = request.GET.get('pg')
         all_task = paginator.get_page(page)
         return render(request, 'todolist.html',{'all_task':all_task})
+@login_required        
 def delete_task(request,task_id):
     task = Task.objects.get(pk=task_id)
     task.delete()
     return redirect('todolist')
+@login_required
 def edit_task(request,task_id):
     if request.method == 'POST':
         task = Task.objects.get(pk=task_id)
@@ -34,11 +36,13 @@ def edit_task(request,task_id):
     else:
         task_obj = Task.objects.get(pk=task_id)
         return render(request,'edit.html',{'task_obj':task_obj})
+@login_required
 def complete_task(request,task_id):
     task = Task.objects.get(pk=task_id)
     task.done = True
     task.save()
     return redirect('todolist')
+@login_required
 def pending_task(request,task_id):
     task = Task.objects.get(pk=task_id)
     task.done = False

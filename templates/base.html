@@ -28,6 +28,21 @@
                 </li>
             </ul>
         </div>
+        {% if user.is_authenticated %}
+            <div class="form-inline my-2 my-lg-0">
+                <div class="p-2 bg-dark text-white">Login as <b>{{user.username}}</b></div>
+                <a href="{% url 'logout' %}">
+                    <button class="btn btn-info my-2 my-sm-0" type="submit">Logout</button>
+                </a>
+            </div>
+        {% else %}
+            <a href="{% url 'register' %}">
+                <button class="btn btn-success my-2 my-sm-0" type="submit">Register</button>
+            </a>
+            <a href="{% url 'login' %}">
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">Login</button>
+            </a>
+        {% endif %}
     </nav>
   </head>
   <body>

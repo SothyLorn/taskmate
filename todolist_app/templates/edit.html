@@ -5,13 +5,18 @@
 {% block content %}
     </br>
     <div class="container">
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <input type="text" class="form-control" name="task" aria-describedby="emailHelp" value="{{task_obj.task}}">
-                <input type="hidden" name="done" value="{{task_obj.done}}">
-            </div>
-            <button type="submit" class="btn btn-primary">Update Task</button>
-        </form>
+        {% if task_obj.manage == request.user %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control" name="task" aria-describedby="emailHelp" value="{{task_obj.task}}">
+                    <input type="hidden" name="done" value="{{task_obj.done}}">
+                </div>
+                <button type="submit" class="btn btn-primary">Update Task</button>
+            </form>
+        {% else %}
+            <p>Access Denied.</p>
+        {% endif %}
+        
     </div>
 {% endblock content %}

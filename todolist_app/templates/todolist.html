@@ -5,6 +5,17 @@
 
 {% block content %}
     </br>
+    <div class="container mt-5">
+        {% if messages %}
+            {% for message in messages%}
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            {% endfor %}
+        {% endif %}
+    </div>
     <div class="container"> 
         <form method="POST">
             {% csrf_token %}

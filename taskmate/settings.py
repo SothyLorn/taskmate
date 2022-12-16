@@ -26,6 +26,12 @@ environ.Env.read_env(os.path.join(BASE_DIR,'.env'))
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DJANGO_DEBUG')
+HOST = env('HOST')
+DB_USER = env('DB_USER')
+DB_PASSWORD = env('DB_PASSWORD')
+DB_DATABASE = env('DB_DATABASE')
+DB_PORT = env('DB_PORT')
+
 
 ALLOWED_HOSTS = [env('DJANGO_ALLOWED_HOSTS')]
 
@@ -81,8 +87,13 @@ WSGI_APPLICATION = 'taskmate.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_DATABASE,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': HOST,
+        'PORT': DB_PORT,
+        'USE_TZ': 'True'
     }
 }
 
@@ -117,7 +128,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
